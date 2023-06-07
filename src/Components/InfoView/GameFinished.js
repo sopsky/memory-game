@@ -1,53 +1,37 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
 
 const GameFinished = ({ score, username, setScore }) => {
   const navigate = useNavigate();
-  let user_id = Cookies.get('user_id'); 
- 
 
-  const handleSaveScore = () => {
-    if (!user_id || username !== Cookies.get('username')) {
-      // User does not exist or username has changed, create a new user
-      axios.post('http://localhost:8800/users', { username })
-        .then(userResponse => {
-          user_id = userResponse.data.user_id; // Set the user_id from the response
-  
-          Cookies.set('user_id', user_id); // Store user_id in cookie
-          Cookies.set('username', username); // Store the new username in cookie
-  
-          saveScore();
-        })
-        .catch(error => {
-          console.error(error);
-        });
-      
-    } else {
-      // User already exists, directly save the score
-      saveScore();
+ 
+  const handleSaveScore = async () => {
+    try {
+      // Get the user ID based on the username
+      const response = await axios.get(`http://localhost:8800/usersid?username=${username}`);
+      const user = response.data[0];
+
+      if (user) {
+        const userId = user.user_id;
+
+        // Save the score with the user ID
+        await axios.post('http://localhost:8800/scores', { score, user_id: userId });
+
+        // Handle successful score save
+        console.log('Score saved successfully!');
+      } else {
+        // Handle case when user is not found
+        console.error('User not found');
+      }
+    } catch (error) {
+      // Handle error saving the score
+      console.error('Error saving the score:', error);
     }
   };
+
+
   
-  const saveScore = () => {
-    axios.post('http://localhost:8800/topscore', { score })
-      .then(scoreResponse => {
-        const score_id = scoreResponse.data.score_id; // Get the score_id from the response
-  
-        // Make a POST request to /userscore with user_id and score_id
-        axios.post('http://localhost:8800/userscore', { user_id, score_id })
-          .then(userscoreResponse => {
-            console.log(userscoreResponse.data); // Optional: Log the response from the server
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      })
-      .catch(error => {
-        console.error(error);
-      });
-      
-  };
+ 
   
   const navigateHome = () => {
     navigate("/")

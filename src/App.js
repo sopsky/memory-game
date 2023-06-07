@@ -7,6 +7,8 @@ import GameFinished from "./Components/InfoView/GameFinished";
 import TheGame from "./Components/GameComponents/TheGame";
 import HighScore from "./Components/InfoView/HighScore";
 import GameOver from "./Components/InfoView/GameOver";
+import Login from "./Components/Auth/LogIn";
+import Register from "./Components/Auth/Register";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -18,18 +20,13 @@ function App() {
         <div style={{ border: "1px solid black" }}>
           <Router>
             <Routes>
-              <Route
-                path="/"
-                element={<FrontPageUserName setUsername={setUsername} />}
-              />
+              <Route path="/" element={<Login setUsername={setUsername} />} />
+              <Route path="/register" element={<Register />} />
               <Route
                 path="/startscreen"
                 element={<StartScreen username={username} />}
               />
-              <Route
-              path="/highscore"
-              element={<HighScore/>}
-            />
+              <Route path="/highscore" element={<HighScore />} />
               <Route
                 path="/thegame"
                 element={
@@ -50,13 +47,7 @@ function App() {
                   />
                 }
               />
-              <Route
-              path="/gameover"
-              element={
-                <GameOver
-                />
-              }
-            />
+              <Route path="/gameover" element={<GameOver />} />
             </Routes>
           </Router>
         </div>

@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
 const StartScreen = ({ username }) => {
@@ -10,12 +8,12 @@ const StartScreen = ({ username }) => {
   };
 
   const goBack = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   const highScore = () => {
-    navigate("/highscore")
-  }
+    navigate("/highscore");
+  };
 
   return (
     <div className="position-relative">
@@ -33,24 +31,33 @@ const StartScreen = ({ username }) => {
           Are you ready to play the game, {username} ?
         </h1>
         <div className="">
-          <button
-            className=" btn btn-danger w-25 mx-auto"
-            onClick={goBack}
-          >
-            EXIT
-          </button>
-          <button
-            className=" btn btn-success w-25 mx-auto m-2"
-            onClick={handleStartClick}
-          >
-            START
-          </button>
-          <button
-          className=" btn btn-light w-25 mx-auto m-2"
-          onClick={highScore}
-        >
-          HIGHSCORE
-        </button>
+          <span className="m-1">
+            <button
+              className="btn btn-danger  w-md-25 mx-auto"
+              style={{ fontSize: "0.875rem" }}
+              onClick={goBack}
+            >
+              EXIT
+            </button>
+          </span>
+          <span className="m-1">
+            <button
+              className="btn btn-success  w-md-25 mx-auto"
+              style={{ fontSize: "0.875rem" }}
+              onClick={handleStartClick}
+            >
+              START
+            </button>
+          </span>
+          <span className="m-1">
+            <button
+              className="btn btn-light  w-md-25 mx-auto "
+              style={{ fontSize: "0.875rem" }}
+              onClick={highScore}
+            >
+              HIGHSCORE
+            </button>
+          </span>
         </div>
       </div>
     </div>

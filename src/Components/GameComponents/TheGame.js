@@ -2,6 +2,7 @@ import React, { useState, useEffect} from "react";
 import axios from "axios";
 import TheCards from "./Cards";
 import { useNavigate } from "react-router-dom";
+
 const TheGame = ({ username, score, setScore }) => {
   const [pokemon, setPokemon] = useState([]);
   const [matchedCardsGame, setMatchedCardsGame] = useState([]);
@@ -51,11 +52,19 @@ const TheGame = ({ username, score, setScore }) => {
   const goBack = () => {
     navigate("/");
     setScore(500)
-
   };
 
   const restart = () => {
-    navigate("/thegame");
+    navigate("/torestartgame");
+    setScore(500);
+    setMatchedCardsGame([]);
+    setTimeout(() => {
+      navigate("/thegame");
+    }, 0);
+  };
+
+  const back = () => {
+    navigate("/startscreen");
     setScore(500);
     setMatchedCardsGame([]);
   };
@@ -77,6 +86,9 @@ const TheGame = ({ username, score, setScore }) => {
           <button className="btn btn-warning m-1" onClick={restart}>
             RESTART
           </button>
+          <button className="btn btn-info m-1" onClick={back}>
+          BACK
+        </button>
         </div>
       </div>
     </div>

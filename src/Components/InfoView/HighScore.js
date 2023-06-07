@@ -29,8 +29,6 @@ const HighScore = () => {
               scoreIds.includes(score.score_id)
             );
 
-            const userIds = userScores.map((score) => score.user_id);
-
             axios
               .get("http://localhost:8800/users")
               .then((response) => {
